@@ -1,0 +1,21 @@
+# Use an official image as the base image
+FROM ubuntu:latest
+
+# Update the package manager
+RUN apt-get update -y
+
+# Install any necessary packages
+RUN apt-get install -y <package1> <package2> <package3>
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the application code into the container
+COPY . .
+
+# Expose any necessary ports
+EXPOSE 80
+
+# Start the application
+CMD ["<command>"]
+
