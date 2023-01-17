@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <deployment-name>
+spec:
+  replicas: <number of replicas>
+  selector:
+    matchLabels:
+      app: <app-label>
+  template:
+    metadata:
+      labels:
+        app: <app-label>
+    spec:
+      containers:
+      - name: <container-name>
+        image: <image-name>
+        ports:
+        - containerPort: <container-port>
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: <service-name>
+spec:
+  selector:
+    app: <app-label>
+  ports:
+  - name: <service-port-name>
+    port: <service-port>
+    targetPort: <container-port>
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <ingress-name>
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+

@@ -1,0 +1,29 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $REGISTRY
+    - docker build -t $REGISTRY/$CI_PROJECT_NAME:$CI_COMMIT_SHA .
+    - docker push $REGISTRY/$CI_PROJECT_NAME:$CI_COMMIT_SHA
+
+test:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - <your test command>
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to Kubernetes..."
+    - kubectl set image deployment/<deployment-name> <container-name>=$REGISTRY/$CI_PROJECT_NAME:$CI_COMMIT_SHA
+

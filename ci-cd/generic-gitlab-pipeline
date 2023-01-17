@@ -1,0 +1,27 @@
+image: <base_image>
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - <build commands>
+    - <push image to container registry>
+
+test:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - <your test command>
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to target environment..."
+    - <deployment commands>
+   
+
+
